@@ -74,10 +74,11 @@ export const Container = styled.div`
   width: 100%;
   height: 100vh;
   margin: 0 auto;
+  margin-top: ${(props) => (props.login ? "0" : "70px")};
   display: flex;
-  //justify-content: center;
   align-items: center;
   flex-direction: column;
+  text-align: center;
 `;
 
 export default GlobalStyle;
