@@ -1,13 +1,15 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import UserContext from "../../components/Context/context";
 import FormButton from "../../components/FormButton/FormButton";
 import { BASE_URL } from "../../constants/urls";
 
 export default function LoginForm() {
   const [form, setForm] = useState({ email: "", password: "" });
   const navigate = useNavigate();
+  const {setUser} = useContext(UserContext);
 
   function handleForm(e) {
     const { name, value } = e.target;
@@ -20,10 +22,11 @@ export default function LoginForm() {
     axios
       .post(`${BASE_URL}/auth/login`, form)
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
+        setUser({...res.data})
         navigate("/habitos");
       })
-      .catch((err) => alert(err.response.data));
+      .catch((err) => err.response.data.details ? alert(err.response.data.details[0]) : alert(err.response.data.message) );
   }
 
   return (

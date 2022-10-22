@@ -5,10 +5,18 @@ import HabitsPage from "./pages/HabitsPage/HabitsPage";
 import HistoryPage from "./pages/HistoryPage/HistoryPage";
 import HomePage from "./pages/HomePage/HomePage";
 import TodayPage from "./pages/TodayPage/TodayPage";
+import { useState } from "react"
+import UserContext from "./components/Context/context";
 
 function App() {
+  const [user, setUser] = useState([]);
+
   return (
+    <UserContext.Provider value={{user, setUser}}>
+
     <BrowserRouter>
+    
+
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/cadastro" element={<CreateUserPage />} />
@@ -20,6 +28,8 @@ function App() {
 
       <GlobalStyle />
     </BrowserRouter>
+    </UserContext.Provider>
+
   );
 }
 
