@@ -6,7 +6,12 @@ import { BASE_URL } from "../../constants/urls";
 import UserContext from "../../components/Context/context";
 import { DayButton, DaysBox } from "./styles";
 
-export default function HabitForm({ showForm, setShowForm }) {
+export default function HabitForm({
+  showForm,
+  setShowForm,
+  userHabits,
+  setUserHabits,
+}) {
   const [form, setForm] = useState({ name: "", days: [] });
   const { user } = useContext(UserContext);
 
@@ -38,9 +43,7 @@ export default function HabitForm({ showForm, setShowForm }) {
 
     axios
       .post(`${BASE_URL}/habits`, form, config)
-      .then((res) => {
-        console.log("Resposta ao criar hábito:", res);
-      })
+      .then((res) => setUserHabits([...userHabits, res.data]))
       .catch((err) =>
         err.response.data.details
           ? alert(err.response.data.details[0])

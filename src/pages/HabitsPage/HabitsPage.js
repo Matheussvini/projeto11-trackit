@@ -45,7 +45,7 @@ if (error !== null) {
         Meus hábitos
         <AddHabitButton onClick={() => setShowForm(!showForm)} >+</AddHabitButton>
       </Title>
-      <HabitForm showForm={showForm} setShowForm={setShowForm} />
+      <HabitForm showForm={showForm} setShowForm={setShowForm} userHabits={userHabits} setUserHabits={setUserHabits} />
       {userHabits.map((h, i) => (
         <HabitCard habit={h} userHabits={userHabits} setUserHabits={setUserHabits} key={h.id} />
       ))}

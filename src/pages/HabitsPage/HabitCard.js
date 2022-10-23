@@ -12,21 +12,25 @@ export default function HabitCard({ habit, userHabits, setUserHabits }) {
   const { user } = useContext(UserContext);
 
   function deleteHabit(id) {
+    const confirmation = window.confirm(
+      `Deseja realmente excluir o hábito ${name}?`
+    );
+    if (confirmation) {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
-
-    axios
-      .delete(`${BASE_URL}/habits/${id}`, config)
-      .then(() => {
-        setUserHabits(userHabits.filter((item) => item.id !== id));
-      })
-      .catch((err) => {
-        alert("Erro: ", err.response.data);
-      });
+      axios
+        .delete(`${BASE_URL}/habits/${id}`, config)
+        .then(() => {
+          setUserHabits(userHabits.filter((item) => item.id !== id));
+        })
+        .catch((err) => {
+          alert("Erro: ", err.response.data);
+        });
+    }
   }
 
   return (
