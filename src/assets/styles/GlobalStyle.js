@@ -78,6 +78,7 @@ button{
 export const Container = styled.div`
   background-color: ${(props) => (props.login ? "#FFFFFF" : "#F2F2F2")};
   width: 100%;
+  min-height: 100vh;
   height: 100%;
   margin: 0 auto;
   margin-top: ${(props) => (props.login ? "0" : "70px")};

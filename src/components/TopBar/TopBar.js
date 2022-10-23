@@ -16,6 +16,7 @@ const Box = styled.div`
   width: 100%;
   height: 70px;
   position: fixed;
+  z-index: 3;
   top: 0;
   left: 0;
   background-color: #126ba5;
