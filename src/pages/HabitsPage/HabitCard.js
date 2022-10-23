@@ -1,9 +1,33 @@
 import styled from "styled-components";
 import { DAYS } from "../../constants/days";
 import { DayButton, DaysBox } from "./styles";
+import { BsTrash } from "react-icons/bs";
+import { useContext } from "react";
+import UserContext from "../../components/Context/context";
+import axios from "axios";
+import { BASE_URL } from "../../constants/urls";
 
-export default function HabitCard({ habit }) {
+export default function HabitCard({ habit, userHabits, setUserHabits }) {
   const { id, name, days } = habit;
+  const { user } = useContext(UserContext);
+
+  function deleteHabit(id) {
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+
+    axios
+      .delete(`${BASE_URL}/habits/${id}`, config)
+      .then(() => {
+        setUserHabits(userHabits.filter((item) => item.id !== id));
+      })
+      .catch((err) => {
+        alert("Erro: ", err.response.data);
+      });
+  }
 
   return (
     <HabitBox>
@@ -15,11 +39,15 @@ export default function HabitCard({ habit }) {
           </DayButton>
         ))}
       </DaysBox>
+      <DeleteHabit onClick={() => deleteHabit(id)}>
+        <BsTrash />
+      </DeleteHabit>
     </HabitBox>
   );
 }
 
 const HabitBox = styled.div`
+  position: relative;
   background-color: #fff;
   width: 340px;
   min-height: 91px;
@@ -43,5 +71,16 @@ const HabitBox = styled.div`
         opacity: initial;
       }
     }
+  }
+`;
+const DeleteHabit = styled.div`
+  font-size: 15px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #666666;
+  cursor: pointer;
+  :hover {
+    opacity: 60%;
   }
 `;

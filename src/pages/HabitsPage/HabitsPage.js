@@ -13,7 +13,6 @@ export default function HabitsPage({}) {
   const { user } = useContext(UserContext);
   const [showForm, setShowForm] = useState(false);
   const [userHabits, setUserHabits] = useState([]);
-  console.log("User habits arr:", userHabits)
   const [error, setError] = useState(null);
 
 
@@ -39,10 +38,6 @@ if (error !== null) {
     return <div>Carregando...</div>;
   }
 
-// if (!userHabits) {
-//     return <div>Carregando...</div>
-// }
-
   return (
     <Container>
       <TopBar />
@@ -52,7 +47,7 @@ if (error !== null) {
       </Title>
       <HabitForm showForm={showForm} setShowForm={setShowForm} />
       {userHabits.map((h, i) => (
-        <HabitCard habit={h} key={h.id} />
+        <HabitCard habit={h} userHabits={userHabits} setUserHabits={setUserHabits} key={h.id} />
       ))}
       <BoxText hasHabit={userHabits.length > 0} >
       Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
