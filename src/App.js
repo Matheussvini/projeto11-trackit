@@ -9,7 +9,14 @@ import { useState } from "react"
 import UserContext from "./components/Context/context";
 
 function App() {
+
   const [user, setUser] = useState([]);
+  const localUserSerializado = localStorage.getItem("localUser");
+  const localUser = JSON.parse(localUserSerializado);
+
+  if(localUser !== null && user.length === 0){
+    setUser(localUser)
+  }
 
   return (
     <UserContext.Provider value={{user, setUser}}>

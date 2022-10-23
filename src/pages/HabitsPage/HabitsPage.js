@@ -8,15 +8,20 @@ import HabitForm from "./HabitForm";
 import axios from "axios";
 import { BASE_URL } from "../../constants/urls";
 import HabitCard from "./HabitCard";
+import { useNavigate } from "react-router-dom";
 
 export default function HabitsPage({}) {
   const { user } = useContext(UserContext);
   const [showForm, setShowForm] = useState(false);
   const [userHabits, setUserHabits] = useState([]);
   const [error, setError] = useState(null);
-
+  const navigate = useNavigate();
 
   useEffect(() => {
+
+    if(user.length === 0){
+        return navigate("/")
+      }
 
     const config = {
         headers: {

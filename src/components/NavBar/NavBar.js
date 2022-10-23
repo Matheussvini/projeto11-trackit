@@ -7,11 +7,15 @@ export default function NavBar() {
   const { user } = useContext(UserContext);
   return (
     <Box>
-      Hábitos
-      <Link to="/hoje" >
-      <TodayButton>Hoje</TodayButton>
+      <Link to="/habitos">
+        <PageButton>Hábitos</PageButton>
       </Link>
-      Histórico
+      <Link to="/hoje">
+        <TodayButton>Hoje</TodayButton>
+      </Link>
+      <Link to="/historico">
+        <PageButton>Histórico</PageButton>
+      </Link>
     </Box>
   );
 }
@@ -27,10 +31,6 @@ const Box = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  font-size: 18px;
-  line-height: 22px;
-  text-align: center;
-  color: #52b6ff;
   box-sizing: border-box;
   img {
     width: 51px;
@@ -49,4 +49,18 @@ const TodayButton = styled.button`
   text-align: center;
   color: #ffffff;
   margin-bottom: 40px;
+`;
+const PageButton = styled.button`
+  border: none;
+  background-color: #fff;
+  width: 84px;
+  height: 35px;
+  font-size: 18px;
+  line-height: 22px;
+  color: #52b6ff;
+  border-radius: 4.64px;
+  &:hover {
+    background-color: #52b6ff;
+    color: #fff;
+  }
 `;

@@ -23,6 +23,9 @@ export default function LoginForm() {
       .post(`${BASE_URL}/auth/login`, form)
       .then((res) => {
         setUser({ ...res.data });
+        const localUser =  { ...res.data };
+        const localUserSerializado = JSON.stringify(localUser);
+        localStorage.setItem("localUser", localUserSerializado);
         navigate("/habitos");
       })
       .catch((err) =>
