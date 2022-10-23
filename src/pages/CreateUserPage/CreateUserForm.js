@@ -16,11 +16,9 @@ export default function CreateUserForm() {
 
     function registration(e){
         e.preventDefault()
-        console.log(form)
 
         axios.post(`${BASE_URL}/auth/sign-up`, form)
             .then(res => {
-                console.log(res)
                 navigate("/")
             })
             .catch(err => alert(err.response.data))

@@ -9,7 +9,7 @@ import { BASE_URL } from "../../constants/urls";
 export default function LoginForm() {
   const [form, setForm] = useState({ email: "", password: "" });
   const navigate = useNavigate();
-  const {setUser} = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   function handleForm(e) {
     const { name, value } = e.target;
@@ -22,13 +22,16 @@ export default function LoginForm() {
     axios
       .post(`${BASE_URL}/auth/login`, form)
       .then((res) => {
-        console.log(res.data);
-        setUser({...res.data})
+        setUser({ ...res.data });
         navigate("/habitos");
       })
-      .catch((err) => err.response.data.details ? alert(err.response.data.details[0]) : alert(err.response.data.message) );
+      .catch((err) =>
+        err.response.data.details
+          ? alert(err.response.data.details[0])
+          : alert(err.response.data.message)
+      );
   }
-
+  
   return (
     <Form onSubmit={login}>
       <input

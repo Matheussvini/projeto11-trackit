@@ -47,38 +47,67 @@ table {
 body{
     font-family: 'Lexend Deca', sans-serif;
 	font-weight: 400;
-	background-color: #FFFFFF;
+	background-color: #F2F2F2;
 }
 input{
-		background: #FFFFFF;
-		width: 303px;
-        height: 45px;
-        border-radius: 5px;
-        border: solid 1px #D4D4D4;
-        margin-bottom: 6px;
-        display: flex;
-		align-items: center;
-        box-sizing: border-box;
-		font-family: 'Lexend Deca', sans-serif;
-		font-weight: 400;
-		font-size: 20px;
-		padding: 0 11px;
-        ::placeholder{
-        color: #DBDBDB;
-        }
-    }
+  background: #FFFFFF;
+  width: 303px;
+  height: 45px;
+  border-radius: 5px;
+  border: solid 1px #D4D4D4;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  font-family: 'Lexend Deca', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  padding: 0 11px;
+  ::placeholder{
+    color: #DBDBDB;
+  }
+}
+button{
+	cursor: pointer;
+  &:hover{
+    opacity: 60%;
+  }
+}
 `;
 
 export const Container = styled.div`
   background-color: ${(props) => (props.login ? "#FFFFFF" : "#F2F2F2")};
   width: 100%;
-  height: 100vh;
+  height: 100%;
   margin: 0 auto;
   margin-top: ${(props) => (props.login ? "0" : "70px")};
+  margin-bottom: ${(props) => (props.login ? "0" : "110px ")};
   display: flex;
   align-items: center;
   flex-direction: column;
   text-align: center;
+  padding: 0 20px;
+  box-sizing: border-box;
+`;
+
+export const Title = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 21px 0;
+  font-size: 23px;
+  line-height: 29px;
+  color: #126ba5;
+`;
+
+export const BoxText = styled.p`
+  display: ${(props) => (props.hasHabit && "none")};
+  font-size: 18px;
+  line-height: 22px;
+  color: #666666;
+  text-align: justify;
+  margin: 29px 0 59px 0;
 `;
 
 export default GlobalStyle;

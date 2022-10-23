@@ -33,5 +33,7 @@ const Box = styled.div`
     width: 51px;
     height: 51px;
     border-radius: 98.5px;
+    font-size: 18px;
+    line-height: 14px;
   }
 `;
