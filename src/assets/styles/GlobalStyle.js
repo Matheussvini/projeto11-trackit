@@ -91,7 +91,7 @@ export const Container = styled.div`
   box-sizing: border-box;
 `;
 
-export const Title = styled.div`
+export const Title = styled.h1`
   width: 100%;
   display: flex;
   justify-content: space-between;
