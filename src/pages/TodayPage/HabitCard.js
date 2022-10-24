@@ -9,6 +9,8 @@ export default function HabitCard({ habit, change, setChange }) {
   const { name, id, done, currentSequence, highestSequence } = habit;
   const { user } = useContext(UserContext);
 
+  const record = currentSequence !== 0 && currentSequence === highestSequence;
+
   function checkButton(e) {
     e.preventDefault();
 
@@ -20,7 +22,7 @@ export default function HabitCard({ habit, change, setChange }) {
 
     if (done) {
       axios
-        .post(`${BASE_URL}/habits/${id}/uncheck`,"", config)
+        .post(`${BASE_URL}/habits/${id}/uncheck`, "", config)
         .then(() => setChange([!change]))
         .catch((err) =>
           err.response.data.details
@@ -29,7 +31,7 @@ export default function HabitCard({ habit, change, setChange }) {
         );
     } else {
       axios
-        .post(`${BASE_URL}/habits/${id}/check`,"", config)
+        .post(`${BASE_URL}/habits/${id}/check`, "", config)
         .then(() => setChange([!change]))
         .catch((err) =>
           err.response.data.details
@@ -41,11 +43,15 @@ export default function HabitCard({ habit, change, setChange }) {
 
   return (
     <HabitBox>
-      <TextBox done={done} >
+      <TextBox done={done} record={record}>
         <h3>{name}</h3>
-        <p>Sequência atual: <span>{currentSequence} dias</span></p>
+        <p>
+          Sequência atual: <span>{currentSequence} dias</span>
+        </p>
         <br />
-        <p>Seu recorde: <span>{highestSequence} dias</span></p>
+        <p>
+          Seu recorde: <b>{highestSequence} dias</b>
+        </p>
       </TextBox>
       <CheckButton done={done} onClick={checkButton}>
         <BsFillCheckSquareFill />
@@ -78,8 +84,11 @@ const TextBox = styled.div`
   p {
     font-size: 13px;
     line-height: 16px;
-    span{
-        color: ${(props) => (props.done ? "#8FC549" : "#666666")};
+    span {
+      color: ${(props) => (props.done ? "#8FC549" : "#666666")};
+    }
+    b {
+      color: ${(props) => (props.record ? "#8FC549" : "#666666")};
     }
   }
 `;
