@@ -21,14 +21,13 @@ function App() {
 
   const localUserSerializado = localStorage.getItem("localUser");
   const localUser = JSON.parse(localUserSerializado);
-  
+
   if(localUser !== null && user.length === 0){
     setUser(localUser)
   }
 
-  
-
   useEffect(() => {
+    if(user.length !== 0){
     let localHabitsDone = todayUserHabits.filter((item) => item.done === true);
   setHabitsDone(localHabitsDone);
   const userProgress = ((localHabitsDone.length / todayUserHabits.length) * 100).toFixed(0);
@@ -51,9 +50,11 @@ function App() {
       })
       .catch((err) => {
         setError(err.message);
-        alert(err.response.data);
+        err.response.data.details
+          ? alert(err.response.data.details[0])
+          : alert(err.response.data.message)
       });
-  }, [change]);
+  }}, [change]);
 
   if (error !== null) {
     return <div>Erro {error}! Tente de novo</div>;
@@ -62,6 +63,8 @@ function App() {
   if (error === null && !todayUserHabits) {
     return <div>Carregando...</div>;
   }
+
+
 
   return (
     <UserContext.Provider value={{

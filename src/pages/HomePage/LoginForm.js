@@ -18,6 +18,7 @@ export default function LoginForm() {
 
   function login(e) {
     e.preventDefault();
+    const { checked} = e.target[3];
 
     axios
       .post(`${BASE_URL}/auth/login`, form)
@@ -25,7 +26,7 @@ export default function LoginForm() {
         setUser({ ...res.data });
         const localUser =  { ...res.data };
         const localUserSerializado = JSON.stringify(localUser);
-        localStorage.setItem("localUser", localUserSerializado);
+        checked && localStorage.setItem("localUser", localUserSerializado);
         navigate("/habitos");
       })
       .catch((err) =>
@@ -53,6 +54,17 @@ export default function LoginForm() {
         required
       />
       <FormButton>Entrar</FormButton>
+      <CheckBox>
+      <CheckInput 
+      type="checkbox"
+      name="conected"
+      value={true}
+      />
+      <label htmlFor="conected" >
+        Mantenha-se conectado
+      </label>
+      </CheckBox>
+      
     </Form>
   );
 }
@@ -60,3 +72,12 @@ export default function LoginForm() {
 const Form = styled.form`
   max-width: 90%;
 `;
+const CheckBox = styled.div`
+  display: flex;
+  align-items: center;
+  color: #52b6ff;
+`
+const CheckInput = styled.input`
+  width: 20px;
+  margin-right: 10px;
+`
