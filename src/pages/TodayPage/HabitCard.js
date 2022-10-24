@@ -41,11 +41,11 @@ export default function HabitCard({ habit, change, setChange }) {
 
   return (
     <HabitBox>
-      <TextBox>
+      <TextBox done={done} >
         <h3>{name}</h3>
-        <span>Sequência atual: {currentSequence} dias</span>
+        <p>Sequência atual: <span>{currentSequence} dias</span></p>
         <br />
-        <span>Seu recorde: {highestSequence} dias</span>
+        <p>Seu recorde: <span>{highestSequence} dias</span></p>
       </TextBox>
       <CheckButton done={done} onClick={checkButton}>
         <BsFillCheckSquareFill />
@@ -75,9 +75,12 @@ const TextBox = styled.div`
     font-size: 20px;
     line-height: 25px;
   }
-  span {
+  p {
     font-size: 13px;
     line-height: 16px;
+    span{
+        color: ${(props) => (props.done ? "#8FC549" : "#666666")};
+    }
   }
 `;
 const CheckButton = styled.div`
