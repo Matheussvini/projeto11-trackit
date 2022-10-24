@@ -1,13 +1,33 @@
 import { useContext } from "react";
 import styled from "styled-components";
 import UserContext from "../Context/context";
+import { HiOutlineLogout } from "react-icons/hi";
+import { useNavigate } from "react-router-dom";
+
 
 export default function TopBar() {
   const { user } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  function logout(){
+    const confirmation = window.confirm(
+      "Deseja realmente sair?"
+    );
+    if (confirmation) {
+      localStorage.clear();
+      window.location.reload();
+    }
+  }
+
   return (
     <Box>
       TrackIt
+      <div>
       <img src={user.image} alt="Foto do usuário" />
+      <LogoutIcon>
+      <HiOutlineLogout onClick={logout} />
+      </LogoutIcon>
+      </div>      
     </Box>
   );
 }
@@ -36,5 +56,17 @@ const Box = styled.div`
     border-radius: 98.5px;
     font-size: 18px;
     line-height: 14px;
+    margin-right: 10px;
+  }
+  div{
+    display: flex;
+    align-items: center;
   }
 `;
+const LogoutIcon = styled.div`
+cursor: pointer;
+font-size: 35px;
+      :hover{
+        opacity: 60%;
+      }
+`
