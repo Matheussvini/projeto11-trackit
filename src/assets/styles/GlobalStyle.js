@@ -122,4 +122,10 @@ export const BoxText = styled.p`
   margin-bottom: 59px;
 `;
 
+export const LoadingText = styled.h3`
+  font-size: 23px;
+  line-height: 29px;
+  color: #126ba5;
+`
+
 export default GlobalStyle;

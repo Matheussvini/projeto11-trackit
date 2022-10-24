@@ -9,18 +9,19 @@ import UserContext from "../../components/Context/context";
 import axios from "axios";
 import { BASE_URL } from "../../constants/urls";
 import { useNavigate } from "react-router-dom";
+import Loading from "../../components/Loading/Loading";
 
 export default function TodayPage({error, setError}) {
   const { user, todayProgress, setTodayProgress, todayUserHabits,
     setTodayUserHabits,change, setChange,habitsDone } = useContext(UserContext);
   const navigate = useNavigate();
+  const [localHabits, setLocalHabits] = useState(null)
 
   let customParseFormat = require("dayjs/plugin/customParseFormat");
   dayjs.extend(customParseFormat);
   require("dayjs/locale/pt-br");
   let today = dayjs().locale("pt-br").format("dddd, DD/MM");
   today = today.charAt(0).toUpperCase() + today.slice(1);
-
   
 useEffect(() => {
     
@@ -36,7 +37,10 @@ useEffect(() => {
 
     axios
       .get(`${BASE_URL}/habits/today`, config)
-      .then((res) => setTodayUserHabits(res.data))
+      .then((res) => {
+        setTodayUserHabits(res.data)
+        setLocalHabits(res.datay)
+      })
       .catch((err) => {
         setError(err.message);
         alert(err.response.data);
@@ -46,8 +50,10 @@ useEffect(() => {
     return <div>Erro {error}! Tente de novo</div>;
   }
 
-  if (error === null && !todayUserHabits) {
-    return <div>Carregando...</div>;
+  if (error === null && localHabits === null) {
+    return (
+      <Loading />
+    );
   }
 
   return (
