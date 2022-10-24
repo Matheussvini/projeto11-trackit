@@ -13,7 +13,7 @@ export default function HabitForm({
   setUserHabits,
 }) {
   const [form, setForm] = useState({ name: "", days: [] });
-  const { user } = useContext(UserContext);
+  const { user, change, setChange } = useContext(UserContext);
 
   function handleForm(e) {
     const { value } = e.target;
@@ -43,7 +43,9 @@ export default function HabitForm({
 
     axios
       .post(`${BASE_URL}/habits`, form, config)
-      .then((res) => setUserHabits([...userHabits, res.data]))
+      .then((res) => {
+        setChange([!change])
+        setUserHabits([...userHabits, res.data])})
       .catch((err) =>
         err.response.data.details
           ? alert(err.response.data.details[0])

@@ -9,7 +9,7 @@ import { BASE_URL } from "../../constants/urls";
 
 export default function HabitCard({ habit, userHabits, setUserHabits }) {
   const { id, name, days } = habit;
-  const { user } = useContext(UserContext);
+  const { user, change, setChange } = useContext(UserContext);
 
   function deleteHabit(id) {
     const confirmation = window.confirm(
@@ -25,6 +25,7 @@ export default function HabitCard({ habit, userHabits, setUserHabits }) {
       axios
         .delete(`${BASE_URL}/habits/${id}`, config)
         .then(() => {
+          setChange([!change])
           setUserHabits(userHabits.filter((item) => item.id !== id));
         })
         .catch((err) => {

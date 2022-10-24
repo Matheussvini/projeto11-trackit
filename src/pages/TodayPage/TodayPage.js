@@ -10,12 +10,10 @@ import axios from "axios";
 import { BASE_URL } from "../../constants/urls";
 import { useNavigate } from "react-router-dom";
 
-export default function TodayPage({}) {
-  const { user } = useContext(UserContext);
-  const [todayUserHabits, setTodayUserHabits] = useState([]);
-  const [error, setError] = useState(null);
+export default function TodayPage({error, setError}) {
+  const { user, todayProgress, setTodayProgress, todayUserHabits,
+    setTodayUserHabits,change, setChange,habitsDone } = useContext(UserContext);
   const navigate = useNavigate();
-  const [change, setChange] = useState(false);
 
   let customParseFormat = require("dayjs/plugin/customParseFormat");
   dayjs.extend(customParseFormat);
@@ -23,10 +21,11 @@ export default function TodayPage({}) {
   let today = dayjs().locale("pt-br").format("dddd, DD/MM");
   today = today.charAt(0).toUpperCase() + today.slice(1);
 
-  let habitsDone = todayUserHabits.filter((item) => item.done === true);
-  const userProgress = ((habitsDone.length / todayUserHabits.length) * 100).toFixed(0);
-
-  useEffect(() => {
+//   let habitsDone = todayUserHabits.filter((item) => item.done === true);
+//   const userProgress = ((habitsDone.length / todayUserHabits.length) * 100).toFixed(0);
+  
+useEffect(() => {
+    
     if (user.length === 0) {
       return navigate("/");
     }
@@ -60,10 +59,10 @@ export default function TodayPage({}) {
       <Subtitle done={!habitsDone.length}>
         {!habitsDone.length
           ? "Nenhum hábito concluído ainda"
-          : `${userProgress}% dos hábitos concluídos`}
+          : `${todayProgress}% dos hábitos concluídos`}
       </Subtitle>
       {todayUserHabits.map((h) => (
-        <HabitCard habit={h} key={h.id} change={change} setChange={setChange} />
+        <HabitCard habit={h} key={h.id} />
       ))}
 
       <NavBar />

@@ -5,9 +5,9 @@ import UserContext from "../../components/Context/context";
 import axios from "axios";
 import { BASE_URL } from "../../constants/urls";
 
-export default function HabitCard({ habit, change, setChange }) {
+export default function HabitCard({ habit }) {
   const { name, id, done, currentSequence, highestSequence } = habit;
-  const { user } = useContext(UserContext);
+  const { user, change, setChange } = useContext(UserContext);
 
   const record = currentSequence !== 0 && currentSequence === highestSequence;
 

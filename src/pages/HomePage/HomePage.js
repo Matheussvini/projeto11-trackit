@@ -13,6 +13,7 @@ export default function HomePage({}) {
 
   useEffect(() => {
     if (user.length !== 0) {
+      navigate("/hoje")
       navigate("/habitos");
     }
   }, []);
