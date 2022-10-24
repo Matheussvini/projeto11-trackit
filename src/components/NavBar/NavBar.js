@@ -2,16 +2,30 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import UserContext from "../Context/context";
+import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 export default function NavBar() {
-  const { user } = useContext(UserContext);
+  const { todayProgress } = useContext(UserContext);
   return (
     <Box>
       <Link to="/habitos">
         <PageButton>Hábitos</PageButton>
       </Link>
       <Link to="/hoje">
-        <TodayButton>Hoje</TodayButton>
+        <TodayButton>
+          <CircularProgressbar
+            value={todayProgress}
+            text="Hoje"
+            styles={buildStyles({
+              textColor: "#FFF",
+              textSize: "18px",
+              lineHeigth: "22px",
+              trailColor: "#52b6ff",
+              pathColor: "#FFF",
+            })}
+          />
+        </TodayButton>
       </Link>
       <Link to="/historico">
         <PageButton>Histórico</PageButton>
