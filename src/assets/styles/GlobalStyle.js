@@ -108,7 +108,7 @@ export const BoxText = styled.p`
   line-height: 22px;
   color: #666666;
   text-align: justify;
-  margin: 29px 0 59px 0;
+  margin-bottom:59px;
 `;
 
 export default GlobalStyle;
