@@ -4,6 +4,7 @@ import styled from "styled-components";
 import UserContext from "../Context/context";
 import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { Oval } from "react-loader-spinner";
 
 export default function NavBar() {
   const { todayProgress } = useContext(UserContext);
@@ -14,17 +15,31 @@ export default function NavBar() {
       </Link>
       <Link to="/hoje">
         <TodayButton>
-          <CircularProgressbar
-            value={todayProgress}
-            text="Hoje"
-            styles={buildStyles({
-              textColor: "#FFF",
-              textSize: "18px",
-              lineHeigth: "22px",
-              trailColor: "#52b6ff",
-              pathColor: "#FFF",
-            })}
-          />
+          {todayProgress === null || todayProgress === "NaN" ? (
+            <Oval
+              color="#FFF"
+              text="Hoje"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+              ariaLabel="oval-loading"
+              secondaryColor="#52b6ff"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
+            />
+          ) : (
+            <CircularProgressbar
+              value={todayProgress}
+              text="Hoje"
+              styles={buildStyles({
+                textColor: "#FFF",
+                textSize: "18px",
+                lineHeigth: "22px",
+                trailColor: "#52b6ff",
+                pathColor: "#FFF",
+              })}
+            />
+          )}
         </TodayButton>
       </Link>
       <Link to="/historico">

@@ -14,7 +14,7 @@ function App() {
 
   const [user, setUser] = useState([]);
   const [todayUserHabits, setTodayUserHabits] = useState([]);
-  const [todayProgress, setTodayProgress] = useState(0);
+  const [todayProgress, setTodayProgress] = useState(null);
   const [habitsDone, setHabitsDone] = useState([]);
   const [change, setChange] = useState(false);
   const [error, setError] = useState(null);
@@ -31,7 +31,9 @@ function App() {
     let localHabitsDone = todayUserHabits.filter((item) => item.done === true);
   setHabitsDone(localHabitsDone);
   const userProgress = ((localHabitsDone.length / todayUserHabits.length) * 100).toFixed(0);
-  setTodayProgress(userProgress);
+  if(userProgress !== NaN){
+    setTodayProgress(userProgress);
+  }
 
     const config = {
       headers: {
@@ -46,7 +48,9 @@ function App() {
         let localHabitsDone = res.data.filter((item) => item.done === true);
         setHabitsDone(localHabitsDone);
         const userProgress = ((localHabitsDone.length / res.data.length) * 100).toFixed(0);
-        setTodayProgress(userProgress);
+        if(userProgress !== NaN){
+          setTodayProgress(userProgress);
+        }
       })
       .catch((err) => {
         setError(err.message);
