@@ -1,72 +1,78 @@
-import axios from "axios"
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import styled from "styled-components"
-import FormButton from "../../components/FormButton/FormButton"
-import { BASE_URL } from "../../constants/urls"
+import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import FormButton from "../../components/FormButton/FormButton";
+import { BASE_URL } from "../../constants/urls";
+import loading from "../../assets/images/loading.png";
 
 export default function CreateUserForm() {
-    const [form, setForm] = useState({ email: "", password: "" })
-    const navigate = useNavigate()
+  const [form, setForm] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
+  const [disabled, setDisabled] = useState(false);
 
-    function handleForm(e){
-        const { name, value } = e.target
-        setForm({ ...form, [name]: value })
-    }
+  function handleForm(e) {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  }
 
-    function registration(e){
-        e.preventDefault()
+  function registration(e) {
+    e.preventDefault();
+    setDisabled(true);
 
-        axios.post(`${BASE_URL}/auth/sign-up`, form)
-            .then(res => {
-                navigate("/")
-            })
-            .catch(err => alert(err.response.data))
-    }
+    axios
+      .post(`${BASE_URL}/auth/sign-up`, form)
+      .then((res) => {
+        navigate("/");
+      })
+      .catch((err) => alert(err.response.data));
+  }
 
+  return (
+    <Form onSubmit={registration}>
+      <input
+        name="email"
+        type="email"
+        placeholder="email"
+        onChange={handleForm}
+        required
+        disabled={disabled}
+      />
 
-    return (
-        <Form onSubmit={registration} >
-            <input 
-            name="email"
-            type="email"
-            placeholder="email"
-            onChange={handleForm}
-            required
-             />
+      <input
+        name="password"
+        type="password"
+        placeholder="senha"
+        onChange={handleForm}
+        required
+        disabled={disabled}
+      />
 
-            <input 
-            name="password"
-            type="password"
-            placeholder="senha"
-            onChange={handleForm}
-            required
-            />
+      <input
+        name="name"
+        type="text"
+        placeholder="nome"
+        onChange={handleForm}
+        required
+        disabled={disabled}
+      />
 
-            <input 
-            name="name"
-            type="text"
-            placeholder="nome"
-            onChange={handleForm}
-            required
-            />
+      <input
+        name="image"
+        type="url"
+        placeholder="foto"
+        onChange={handleForm}
+        required
+        disabled={disabled}
+      />
 
-            <input 
-            name="image"
-            type="url"
-            placeholder="foto"
-            onChange={handleForm}
-            required
-            />
-            
-              <FormButton>
-                Cadastrar
-              </FormButton>
-        </Form>
-    )
+      <FormButton disabled={disabled}>
+        {disabled ? <img src={loading} /> : "Entrar"}
+      </FormButton>
+    </Form>
+  );
 }
 
 const Form = styled.form`
-        max-width: 90%;
-    
-`
+  max-width: 90%;
+`;

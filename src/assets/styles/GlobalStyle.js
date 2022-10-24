@@ -66,9 +66,20 @@ input{
   ::placeholder{
     color: #DBDBDB;
   }
+  :disabled{
+    background-color: #F2F2F2;
+    border: 1px solid #D5D5D5;
+    color: #AFAFAF;
+  }
 }
 button{
 	cursor: pointer;
+  :disabled {
+    background: #52b6ff;
+    opacity: 0.7;
+    color: #fff;
+    cursor: inherit;
+  }
   &:hover{
     opacity: 60%;
   }
@@ -103,12 +114,12 @@ export const Title = styled.h1`
 `;
 
 export const BoxText = styled.p`
-  display: ${(props) => (props.hasHabit && "none")};
+  display: ${(props) => props.hasHabit && "none"};
   font-size: 18px;
   line-height: 22px;
   color: #666666;
   text-align: justify;
-  margin-bottom:59px;
+  margin-bottom: 59px;
 `;
 
 export default GlobalStyle;

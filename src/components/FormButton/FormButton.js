@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-export default function FormButton({ children }) {
-  return <Button>{children}</Button>;
+export default function FormButton({ children, disabled }) {
+  return <Button disabled={disabled}>{children}</Button>;
 }
 
 const Button = styled.button`

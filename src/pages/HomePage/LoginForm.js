@@ -5,11 +5,13 @@ import styled from "styled-components";
 import UserContext from "../../components/Context/context";
 import FormButton from "../../components/FormButton/FormButton";
 import { BASE_URL } from "../../constants/urls";
+import loading from "../../assets/images/loading.png";
 
 export default function LoginForm() {
   const [form, setForm] = useState({ email: "", password: "" });
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
+  const [disabled, setDisabled] = useState(false);
 
   function handleForm(e) {
     const { name, value } = e.target;
@@ -18,13 +20,14 @@ export default function LoginForm() {
 
   function login(e) {
     e.preventDefault();
-    const { checked} = e.target[3];
+    const { checked } = e.target[3];
+    setDisabled(true);
 
     axios
       .post(`${BASE_URL}/auth/login`, form)
       .then((res) => {
         setUser({ ...res.data });
-        const localUser =  { ...res.data };
+        const localUser = { ...res.data };
         const localUserSerializado = JSON.stringify(localUser);
         checked && localStorage.setItem("localUser", localUserSerializado);
         navigate("/habitos");
@@ -35,7 +38,7 @@ export default function LoginForm() {
           : alert(err.response.data.message)
       );
   }
-  
+
   return (
     <Form onSubmit={login}>
       <input
@@ -44,6 +47,7 @@ export default function LoginForm() {
         placeholder="email"
         onChange={handleForm}
         required
+        disabled={disabled}
       />
 
       <input
@@ -52,19 +56,20 @@ export default function LoginForm() {
         placeholder="senha"
         onChange={handleForm}
         required
+        disabled={disabled}
       />
-      <FormButton>Entrar</FormButton>
+      <FormButton disabled={disabled}>
+        {disabled ? <img src={loading} /> : "Entrar"}
+      </FormButton>
       <CheckBox>
-      <CheckInput 
-      type="checkbox"
-      name="conected"
-      value={true}
-      />
-      <label htmlFor="conected" >
-        Mantenha-se conectado
-      </label>
+        <CheckInput
+          type="checkbox"
+          name="conected"
+          value={true}
+          disabled={disabled}
+        />
+        <label htmlFor="conected">Mantenha-se conectado</label>
       </CheckBox>
-      
     </Form>
   );
 }
@@ -76,8 +81,8 @@ const CheckBox = styled.div`
   display: flex;
   align-items: center;
   color: #52b6ff;
-`
+`;
 const CheckInput = styled.input`
   width: 20px;
   margin-right: 10px;
-`
+`;

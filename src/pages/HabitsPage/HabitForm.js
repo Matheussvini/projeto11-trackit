@@ -5,6 +5,7 @@ import { DAYS } from "../../constants/days";
 import { BASE_URL } from "../../constants/urls";
 import UserContext from "../../components/Context/context";
 import { DayButton, DaysBox } from "./styles";
+import loading from "../../assets/images/loading.png";
 
 export default function HabitForm({
   showForm,
@@ -14,6 +15,7 @@ export default function HabitForm({
 }) {
   const [form, setForm] = useState({ name: "", days: [] });
   const { user, change, setChange } = useContext(UserContext);
+  const [disabled, setDisabled] = useState(false);
 
   function handleForm(e) {
     const { value } = e.target;
@@ -30,6 +32,7 @@ export default function HabitForm({
 
   function createHabit(e) {
     e.preventDefault();
+    setDisabled(true);
 
     if (form.days.length === 0) {
       return alert("Por favor, selecione pelo menos um dia para o hábito!");
@@ -44,16 +47,19 @@ export default function HabitForm({
     axios
       .post(`${BASE_URL}/habits`, form, config)
       .then((res) => {
-        setChange([!change])
-        setUserHabits([...userHabits, res.data])})
+        setChange([!change]);
+        setUserHabits([...userHabits, res.data]);
+        setForm({ name: "", days: [] });
+    setShowForm(false);
+    setDisabled(false);
+      })
       .catch((err) =>
         err.response.data.details
           ? alert(err.response.data.details[0])
           : alert(err.response.data.message)
       );
 
-    setForm({ name: "", days: [] });
-    setShowForm(false);
+    
   }
 
   return (
@@ -65,6 +71,7 @@ export default function HabitForm({
         onChange={handleForm}
         required
         value={form.name}
+        disabled={disabled}
       />
       <DaysBox>
         {DAYS.map((d, i) => (
@@ -73,6 +80,7 @@ export default function HabitForm({
             onClick={() => avaliaOnclick(i)}
             selected={form.days.includes(i)}
             type="button"
+            disabled={disabled}
           >
             {d[0]}
           </DayButton>
@@ -80,10 +88,16 @@ export default function HabitForm({
       </DaysBox>
 
       <ButtonsBox>
-        <CancelButton onClick={() => setShowForm(false)} type="button">
+        <CancelButton
+          disabled={disabled}
+          onClick={() => setShowForm(false)}
+          type="button"
+        >
           Cancelar
         </CancelButton>
-        <CreateHabitButton type="submit">Salvar</CreateHabitButton>
+        <CreateHabitButton type="submit" disabled={disabled}>
+          {disabled ? <img src={loading} /> : "Salvar"}
+        </CreateHabitButton>
       </ButtonsBox>
     </Form>
   );
@@ -126,8 +140,18 @@ const CancelButton = styled.button`
     background-color: #52b6ff;
     color: #fff;
   }
+  :disabled {
+    background-color: #fff;
+    color: #52b6ff;
+    opacity: 1;
+  }
 `;
 const CreateHabitButton = styled(CancelButton)`
   background-color: #52b6ff;
   color: #fff;
+  :disabled {
+    background: #52b6ff;
+    opacity: 0.7;
+    color: #fff;
+  }
 `;

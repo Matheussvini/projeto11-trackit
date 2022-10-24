@@ -18,4 +18,9 @@ export const DayButton = styled.button`
   font-size: 20px;
   line-height: 25px;
   margin-right: 4px;
+  :disabled {
+    background-color: ${(props) => (props.selected ? "#CFCFCF" : "#FFF")};
+    color: ${(props) => (props.selected ? "#FFF" : "#DBDBDB")};
+    border: solid 1px ${(props) => (props.selected ? "#CFCFCF" : "#D4D4D4")};
+  }
 `;
