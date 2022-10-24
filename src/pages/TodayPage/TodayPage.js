@@ -20,7 +20,7 @@ export default function TodayPage({error, setError}) {
   let customParseFormat = require("dayjs/plugin/customParseFormat");
   dayjs.extend(customParseFormat);
   require("dayjs/locale/pt-br");
-  let today = dayjs().locale("pt-br").format("dddd, DD/MM");
+  let today = dayjs().locale("pt-br").format("dddd, DD/MM").replace("-feira" , "");
   today = today.charAt(0).toUpperCase() + today.slice(1);
   
 useEffect(() => {
