@@ -27,7 +27,7 @@ export default function HabitCard({ habit }) {
         .catch((err) =>
           err.response.data.details
             ? alert(err.response.data.details[0])
-            : alert(err.response.data.message)
+            : alert(err.response.data.message + " Aguarde o 'check' atualizar antes de clicar novamente")
         );
     } else {
       axios
@@ -36,7 +36,7 @@ export default function HabitCard({ habit }) {
         .catch((err) =>
           err.response.data.details
             ? alert(err.response.data.details[0])
-            : alert(err.response.data.message)
+            : alert(err.response.data.message + " Aguarde o 'check' atualizar antes de clicar novamente")
         );
     }
   }
