@@ -30,7 +30,7 @@ export default function LoginForm() {
         const localUser = { ...res.data };
         const localUserSerializado = JSON.stringify(localUser);
         checked && localStorage.setItem("localUser", localUserSerializado);
-        navigate("/habitos");
+        navigate("/hoje");
       })
       .catch((err) => {
         setDisabled(false);

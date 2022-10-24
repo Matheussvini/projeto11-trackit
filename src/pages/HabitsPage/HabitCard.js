@@ -67,6 +67,7 @@ const HabitBox = styled.div`
     font-size: 19.976px;
     line-height: 25px;
     color: #666666;
+    word-wrap: break-word;
   }
   div {
     max-width: 100%;
