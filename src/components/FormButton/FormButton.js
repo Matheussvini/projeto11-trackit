@@ -14,4 +14,7 @@ const Button = styled.button`
   text-align: center;
   font-size: 21px;
   line-height: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

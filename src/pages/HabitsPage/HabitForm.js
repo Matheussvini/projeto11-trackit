@@ -5,7 +5,7 @@ import { DAYS } from "../../constants/days";
 import { BASE_URL } from "../../constants/urls";
 import UserContext from "../../components/Context/context";
 import { DayButton, DaysBox } from "./styles";
-import loading from "../../assets/images/loading.png";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function HabitForm({
   showForm,
@@ -50,16 +50,14 @@ export default function HabitForm({
         setChange([!change]);
         setUserHabits([...userHabits, res.data]);
         setForm({ name: "", days: [] });
-    setShowForm(false);
-    setDisabled(false);
+        setShowForm(false);
+        setDisabled(false);
       })
       .catch((err) =>
         err.response.data.details
           ? alert(err.response.data.details[0])
           : alert(err.response.data.message)
       );
-
-    
   }
 
   return (
@@ -96,7 +94,20 @@ export default function HabitForm({
           Cancelar
         </CancelButton>
         <CreateHabitButton type="submit" disabled={disabled}>
-          {disabled ? <img src={loading} /> : "Salvar"}
+          {disabled ? (
+            <ThreeDots
+              width="84px"
+              height="35px"
+              radius="9"
+              color="#FFF"
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{}}
+              wrapperClassName=""
+              visible={true}
+            />
+          ) : (
+            "Salvar"
+          )}
         </CreateHabitButton>
       </ButtonsBox>
     </Form>

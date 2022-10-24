@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import FormButton from "../../components/FormButton/FormButton";
 import { BASE_URL } from "../../constants/urls";
-import loading from "../../assets/images/loading.png";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function CreateUserForm() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -25,7 +25,12 @@ export default function CreateUserForm() {
       .then((res) => {
         navigate("/");
       })
-      .catch((err) => alert(err.response.data));
+      .catch((err) => {
+        setDisabled(false)
+        err.response.data.details
+          ? alert(err.response.data.details[0])
+          : alert(err.response.data.message)
+      });
   }
 
   return (
@@ -67,7 +72,19 @@ export default function CreateUserForm() {
       />
 
       <FormButton disabled={disabled}>
-        {disabled ? <img src={loading} /> : "Entrar"}
+        {disabled ? (
+          <ThreeDots
+          height="45px"
+          radius="9"
+          color="#FFF"
+          ariaLabel="three-dots-loading"
+          wrapperStyle={{}}
+          wrapperClassName=""
+          visible={true}
+        />
+        ) : (
+          "Entrar"
+        )}
       </FormButton>
     </Form>
   );

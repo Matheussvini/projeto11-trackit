@@ -5,7 +5,7 @@ import styled from "styled-components";
 import UserContext from "../../components/Context/context";
 import FormButton from "../../components/FormButton/FormButton";
 import { BASE_URL } from "../../constants/urls";
-import loading from "../../assets/images/loading.png";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function LoginForm() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -32,11 +32,12 @@ export default function LoginForm() {
         checked && localStorage.setItem("localUser", localUserSerializado);
         navigate("/habitos");
       })
-      .catch((err) =>
+      .catch((err) => {
+        setDisabled(false);
         err.response.data.details
           ? alert(err.response.data.details[0])
-          : alert(err.response.data.message)
-      );
+          : alert(err.response.data.message);
+      });
   }
 
   return (
@@ -59,7 +60,19 @@ export default function LoginForm() {
         disabled={disabled}
       />
       <FormButton disabled={disabled}>
-        {disabled ? <img src={loading} /> : "Entrar"}
+        {disabled ? (
+          <ThreeDots
+            height="45px"
+            radius="9"
+            color="#FFF"
+            ariaLabel="three-dots-loading"
+            wrapperStyle={{}}
+            wrapperClassName=""
+            visible={true}
+          />
+        ) : (
+          "Entrar"
+        )}
       </FormButton>
       <CheckBox>
         <CheckInput
