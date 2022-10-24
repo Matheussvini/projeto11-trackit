@@ -18,12 +18,10 @@ function App() {
   const [habitsDone, setHabitsDone] = useState([]);
   const [change, setChange] = useState(false);
   const [error, setError] = useState(null);
-  // const navigate = useNavigate();
 
   const localUserSerializado = localStorage.getItem("localUser");
   const localUser = JSON.parse(localUserSerializado);
   
-  console.log("today", todayProgress)
   if(localUser !== null && user.length === 0){
     setUser(localUser)
   }
@@ -35,10 +33,6 @@ function App() {
   setHabitsDone(localHabitsDone);
   const userProgress = ((localHabitsDone.length / todayUserHabits.length) * 100).toFixed(0);
   setTodayProgress(userProgress);
-  console.log(userProgress)
-    // if (user.length === 0) {
-    //   return navigate("/");
-    // }
 
     const config = {
       headers: {
@@ -54,11 +48,10 @@ function App() {
         setHabitsDone(localHabitsDone);
         const userProgress = ((localHabitsDone.length / res.data.length) * 100).toFixed(0);
         setTodayProgress(userProgress);
-        console.log(userProgress)
       })
       .catch((err) => {
         setError(err.message);
-        console.log(err.response.data);
+        alert(err.response.data);
       });
   }, [change]);
 

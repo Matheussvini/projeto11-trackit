@@ -21,8 +21,6 @@ export default function TodayPage({error, setError}) {
   let today = dayjs().locale("pt-br").format("dddd, DD/MM");
   today = today.charAt(0).toUpperCase() + today.slice(1);
 
-//   let habitsDone = todayUserHabits.filter((item) => item.done === true);
-//   const userProgress = ((habitsDone.length / todayUserHabits.length) * 100).toFixed(0);
   
 useEffect(() => {
     
@@ -41,7 +39,7 @@ useEffect(() => {
       .then((res) => setTodayUserHabits(res.data))
       .catch((err) => {
         setError(err.message);
-        console.log(err.response.data);
+        alert(err.response.data);
       });
   }, [change]);
   if (error !== null) {

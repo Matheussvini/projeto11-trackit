@@ -33,7 +33,7 @@ export default function HabitsPage({}) {
         .then(res => setUserHabits(res.data))
         .catch(err => {
             setError(err.message)
-            console.log(err.response.data)})
+            alert(err.response.data)})
 }, [])
 if (error !== null) {
     return <div>Erro {error}! Tente de novo</div>;
